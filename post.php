@@ -77,48 +77,13 @@ if ($img->writeImages($diroriginal.$imgname.".".$mimetype, true)) {
     $ssoriginal = true;
 }
 
-// copy to dir 40
-if ($imageprops['width'] >= 40 ) {
-    $img->scaleImage(40,0);
-    if ($img->writeImages($dir40.$imgname.".".$mimetype, true)) {
-        chmod($dir40.$imgname.".".$mimetype,0777);
-        $ss40 = true;
-    }
-}
-
-// copy to dir 80
-if ($imageprops['width'] >= 80 ) {
-    $img->scaleImage(80,0);
-    if ($img->writeImages($dir80.$imgname.".".$mimetype, true)) {
-        chmod($dir80.$imgname.".".$mimetype,0777);
-        $ss80 = true;
-    }
-}
-
-// copy to dir 160
-if ($imageprops['width'] >= 160 ) {
-    $img->scaleImage(160,0);
-    if ($img->writeImages($dir160.$imgname.".".$mimetype, true)) {
-        chmod($dir160.$imgname.".".$mimetype,0777);
-        $ss160 = true;
-    }
-}
-
-// copy to dir 320
-if ($imageprops['width'] >= 320 ) {
-    $img->scaleImage(320,0);
-    if ($img->writeImages($dir320.$imgname.".".$mimetype, true)) {
-        chmod($dir320.$imgname.".".$mimetype,0777);
-        $ss320 = true;
-    }
-}
-
-// copy to dir 640
-if ($imageprops['width'] >= 640 ) {
-    $img->scaleImage(640,0);
-    if ($img->writeImages($dir640.$imgname.".".$mimetype, true)) {
-        chmod($dir640.$imgname.".".$mimetype,0777);
-        $ss640 = true;
+// copy to dir 2048
+if ($imageprops['width'] >= 2048 ) {
+    $img->scaleImage(2048,0);
+    $img->writeImages($dir2048.$imgname.".".$mimetype, true);
+    if ($img->writeImages($dir2048.$imgname.".".$mimetype, true)) {
+        chmod($dir2048.$imgname.".".$mimetype,0777);
+        $ss2048 = true;
     }
 }
 
@@ -131,15 +96,73 @@ if ($imageprops['width'] >= 1280 ) {
     }
 }
 
-// copy to dir 2048
-if ($imageprops['width'] >= 2048 ) {
-    $img->scaleImage(2048,0);
-    $img->writeImages($dir2048.$imgname.".".$mimetype, true);
-    if ($img->writeImages($dir2048.$imgname.".".$mimetype, true)) {
-        chmod($dir2048.$imgname.".".$mimetype,0777);
-        $ss2048 = true;
+// copy to dir 640
+if ($imageprops['width'] >= 640 ) {
+    $img->scaleImage(640,0);
+    if ($img->writeImages($dir640.$imgname.".".$mimetype, true)) {
+        chmod($dir640.$imgname.".".$mimetype,0777);
+        $ss640 = true;
     }
 }
+
+// copy to dir 320
+if ($imageprops['width'] >= 320 ) {
+    $img->scaleImage(320,0);
+    if ($img->writeImages($dir320.$imgname.".".$mimetype, true)) {
+        chmod($dir320.$imgname.".".$mimetype,0777);
+        $ss320 = true;
+    }
+}
+
+// copy to dir 160
+if ($imageprops['width'] >= 160 ) {
+    $img->scaleImage(160,0);
+    if ($img->writeImages($dir160.$imgname.".".$mimetype, true)) {
+        chmod($dir160.$imgname.".".$mimetype,0777);
+        $ss160 = true;
+    }
+}
+
+
+// copy to dir 80
+if ($imageprops['width'] >= 80 ) {
+    $img->scaleImage(80,0);
+    if ($img->writeImages($dir80.$imgname.".".$mimetype, true)) {
+        chmod($dir80.$imgname.".".$mimetype,0777);
+        $ss80 = true;
+    }
+}
+
+// copy to dir 40
+if ($imageprops['width'] >= 40 ) {
+    $img->scaleImage(40,0);
+    if ($img->writeImages($dir40.$imgname.".".$mimetype, true)) {
+        chmod($dir40.$imgname.".".$mimetype,0777);
+        $ss40 = true;
+    }
+}
+
+try {
+    // open connection to MongoDB server
+    $conn = new Mongo('localhost');
+
+    // access database
+    $db = $conn->mediadb;
+
+    // access collection
+    $collection = $db->items;
+    //var_dump($ar);
+    $objectid = $ar["_id"]->{'$id'};
+    // disconnect from server
+    $ar = array('original_size' => array('original_width' => $img_orginal_width , 'original_height' => $img_orginal_height) , 'size_check' => array('original' => $ssoriginal ,'40' => $ss40, '80' => $ss80, '160' => $ss160 , '320' =>$ss320 , '640'=>$ss640 , '1280' => $ss1280 , '2048' => $ss2048));
+    $collection->update(array('_id' => new MongoId($objectid)),array('$set' => $ar));
+    $conn->close();
+} catch (MongoConnectionException $e) {
+    die('Error connecting to MongoDB server');
+} catch (MongoException $e) {
+    die('Error: ' . $e->getMessage());
+}
+
 
 $arr = array('objectid' => $objectid.$mimetype, 'type' => $mimetype, 'original_size' => array('original_width' => $img_orginal_width , 'original_height' => $img_orginal_height) , 'size_check' => array('original' => $ssoriginal ,'40' => $ss40, '80' => $ss80, '160' => $ss160 , '320' =>$ss320 , '640'=>$ss640 , '1280' => $ss1280 , '2048' => $ss2048));
 header('Content-Type: application/json');

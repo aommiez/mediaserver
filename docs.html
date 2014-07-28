@@ -1,0 +1,45 @@
+<body style="font-size: 0.9em;
+font-family: sans-serif,helvetica;">
+Main URL : http://110.164.70.60/
+<hr>
+Upload Photo<br>
+Link = http://110.164.70.60/post<br>
+Method = POST<br>
+parameter = img ( base64 )<br>
+return = json<br>
+<hr>
+Get Photo default<br>
+Link = http://110.164.70.60/get/:id/<br>
+Method = GET<br>
+ex. = http://110.164.70.60/get/53d62ea6a636950e258b4568jpg/<br>
+<hr>
+Get Photo by size ( 40 , 80 , 160 , 320 , 640 , 1280 , 2048 , original )<br>
+Link = http://110.164.70.60/get/:id/:size/<br>
+size = 40 , 80 , 160 , 320 , 640 , 1280 , 2048 , original<br>
+Method = GET<br>
+ex. = http://110.164.70.60/get/53d62ea6a636950e258b4568jpg/160/<br>
+<hr>
+        Get Photo Custom Size Fix Width auto height<br>
+        Link = http://110.164.70.60/get/:id/custom/:width/<br>
+        Method = GET<br>
+        ex. = http://110.164.70.60/get/53d62ea6a636950e258b4568jpg/custom/600/<br>
+<hr>
+Get Photo Custom Size Fix Width Fix Height<br>
+Link = http://110.164.70.60/get/:id/custom/:width/:height<br>
+Method = GET<br>
+ex. = http://110.164.70.60/get/53d62ea6a636950e258b4568jpg/custom/600/300/<br>
+<hr>
+Get Photo Custom Size auto Width Fix Height<br>
+Link = http://110.164.70.60/get/:id/custom/auto/:height<br>
+Method = GET<br>
+ex. = http://110.164.70.60/get/53d62ea6a636950e258b4568jpg/custom/auto/300/<br>
+<hr>
+Get Photo Info<br>
+Link = http://110.164.70.60/getinfo/:id/<br>
+Method = GET<br>
+ex. = http://110.164.70.60/getinfo/53d63ecda636950d258b4567jpg/<br>
+return = json<br>
+</body>
+
+
+

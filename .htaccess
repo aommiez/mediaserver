@@ -13,5 +13,8 @@ RewriteRule ^get/([a-zA-Z0-9]+)/(custom)/([0-9]+)/$ /get/$1/$2/$3/ [R]
 RewriteRule ^get/([a-zA-Z0-9]+)/(custom)/([a-zA-Z0-9]+)/([0-9]+)/$ get.php?id=$1&custom=$2&width=$3&height=$4
 RewriteRule ^get/([a-zA-Z0-9]+)/(custom)/([a-zA-Z0-9]+)/([0-9]+)/$ /get/$1/$2/$3/$4/ [R]
 
+RewriteRule ^getinfo/([a-zA-Z0-9]+)/$ getinfo.php?id=$1
+RewriteRule ^getinfo/([a-zA-Z0-9]+)/$ /getinfo/$1/ [R]
+
 RewriteRule ^post/$ post.php
 RewriteRule ^post/$ /post/ [R]
